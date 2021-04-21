@@ -5,7 +5,7 @@ import chrisPhoto from '../../assets/Chris.jpg';
 import daniPhoto from '../../assets/Dani.jpg';
 import radiPhoto from '../../assets/Radi.jpg';
 import {connect} from 'react-redux';
-import * as actions from '../../actions/actions'
+import * as actions from '../../actions/actions';
 function Card(props) {
 
     useEffect(() =>{
@@ -13,6 +13,7 @@ function Card(props) {
           {name: 'Chris', age: 20, imageUrl: chrisPhoto},
           {name: 'Dani',age: 25, imageUrl: daniPhoto},
           {name: 'Radi',age: 16, imageUrl: radiPhoto}
+    
         ]);
     }, [])
     const onSwipe = (direction) => {
@@ -25,12 +26,22 @@ function Card(props) {
 
     return (
         <div className='CardDiv'>
+         
         <TinderCard 
         onSwipe={onSwipe} 
         onCardLeftScreen={() => onCardLeftScreen('fooBar')} 
         preventSwipe={['right', 'left']}>
-          <img className='card_image' src={props.use} alt=''/>
+          
+          {props.users[0] ? <img className='card_image' src={props.users[0].imageUrl} alt=''/>: null}
           </TinderCard>
+          <TinderCard 
+        onSwipe={onSwipe} 
+        onCardLeftScreen={() => onCardLeftScreen('fooBar')} 
+        preventSwipe={['right', 'left']}>
+          
+          {props.users[0] ? <img className='card_image' src={props.users[1].imageUrl} alt=''/>: null}
+          </TinderCard>
+       
         </div>
     )
 }
