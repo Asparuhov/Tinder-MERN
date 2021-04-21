@@ -32,14 +32,21 @@ function Card(props) {
         onCardLeftScreen={() => onCardLeftScreen('fooBar')} 
         preventSwipe={['right', 'left']}>
           
-          {props.users[0] ? <img className='card_image' src={props.users[0].imageUrl} alt=''/>: null}
+          {props.users.length > 0 ? <img className='card_image' src={props.users[2].imageUrl} alt=''/>: null}
           </TinderCard>
           <TinderCard 
         onSwipe={onSwipe} 
         onCardLeftScreen={() => onCardLeftScreen('fooBar')} 
         preventSwipe={['right', 'left']}>
           
-          {props.users[0] ? <img className='card_image' src={props.users[1].imageUrl} alt=''/>: null}
+          {props.users.length > 0 ? <img className='card_image' src={props.users[1].imageUrl} alt=''/>: null}
+          </TinderCard>
+          <TinderCard 
+        onSwipe={onSwipe} 
+        onCardLeftScreen={() => onCardLeftScreen('fooBar')} 
+        preventSwipe={['right', 'left']}>
+          
+          {props.users.length > 0 ? <img className='card_image' src={props.users[0].imageUrl} alt=''/>: null}
           </TinderCard>
        
         </div>
