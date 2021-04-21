@@ -1,6 +1,19 @@
-.CardDiv{
+.CardDiv {
     margin: 0 auto;
 }
-.CardDiv img{
-    height: 600px;
+
+.CardDiv img {
+    height: 500px;
+    border-radius: 25px;
+}
+
+.CardDiv .card_label {
+    position: absolute;
+    bottom: 200px;
+    left: 50%;
+    font-size: 36px;
+    width: 300px;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align:center;
+    margin: 0 auto;
 }
