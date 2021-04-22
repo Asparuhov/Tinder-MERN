@@ -1,7 +1,8 @@
 let initialState = {
    currentCard: {},
    users: [],
-   swipeChoice: ''
+   swipeChoice: '',
+   likedUsers: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -11,6 +12,21 @@ const reducer = (state = initialState, action) => {
           ...state,
           users: action.payload
         }
+      case 'ONSWIPE':
+        const lastElement = state.users.pop();
+        if(action.direction === 'left'){
+           return{
+             ...state,
+             users: lastElement,
+           }
+        }
+        if(action.direction === 'right'){
+          return{
+            ...state,
+            users: lastElement,
+            likedUsers: state.likedUsers.concat(lastElement)
+          }
+       }
         default:
           return state;
     }

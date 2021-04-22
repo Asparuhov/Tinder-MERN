@@ -1,13 +1,13 @@
-.footer{
-    bottom:0;
-    display:flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 50px;
+.footer {
+    position: fixed;
+    bottom: 10vh;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
 }
 
-.footer__icon{
-    height:40px;
+.footer__icon {
+    height: 40px;
     object-fit: contain;
-    
+
 }

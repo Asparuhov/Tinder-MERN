@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect, useMemo} from 'react'
 import './Card.css';
 import TinderCard from 'react-tinder-card';
 import chrisPhoto from '../../assets/Chris.jpg';
@@ -6,51 +6,67 @@ import daniPhoto from '../../assets/Dani.jpg';
 import radiPhoto from '../../assets/Radi.jpg';
 import {connect} from 'react-redux';
 import * as actions from '../../actions/actions';
+const db = [ 
+  {
+  name: 'Kristiyan Asparuhov',
+  url: chrisPhoto
+},
+{
+  name: 'Yordan Radoslavov',
+  url: daniPhoto
+},
+{
+  name: 'Radoslav Georgiev',
+  url: radiPhoto
+}]
+const alreadyRemoved = []
+let charactersState = db
 function Card(props) {
+  const [characters, setCharacters] = useState(db)
+  const [lastDirection, setLastDirection] = useState()
 
-    useEffect(() =>{
-        props.loadUsers([
-          {name: 'Chris', age: 20, imageUrl: chrisPhoto},
-          {name: 'Dani',age: 25, imageUrl: daniPhoto},
-          {name: 'Radi',age: 16, imageUrl: radiPhoto}
-    
-        ]);
-    }, [])
-    const onSwipe = (direction) => {
-        console.log('You swiped: ' + direction)
-      }
-      
-      const onCardLeftScreen = (myIdentifier) => {
-        console.log(myIdentifier + ' left the screen')
-      }
+  const childRefs = useMemo(() => Array(db.length).fill(0).map(i => React.createRef()), [])
 
-    return (
-        <div className='CardDiv'>
-         
-        <TinderCard 
-        onSwipe={onSwipe} 
-        onCardLeftScreen={() => onCardLeftScreen('fooBar')} 
-        preventSwipe={['right', 'left']}>
-          
-          {props.users.length > 0 ? <img className='card_image' src={props.users[2].imageUrl} alt=''/>: null}
+  const swiped = (direction, nameToDelete) => {
+    console.log('removing: ' + nameToDelete)
+    setLastDirection(direction)
+    alreadyRemoved.push(nameToDelete)
+  }
+
+  const outOfFrame = (name) => {
+    console.log(name + ' left the screen!')
+    charactersState = charactersState.filter(character => character.name !== name)
+    setCharacters(charactersState)
+  }
+
+  const swipe = (dir) => {
+    const cardsLeft = characters.filter(person => !alreadyRemoved.includes(person.name))
+    if (cardsLeft.length) {
+      const toBeRemoved = cardsLeft[cardsLeft.length - 1].name // Find the card object to be removed
+      const index = db.map(person => person.name).indexOf(toBeRemoved) // Find the index of which to make the reference to
+      alreadyRemoved.push(toBeRemoved) // Make sure the next card gets removed next time if this card do not have time to exit the screen
+      childRefs[index].current.swipe(dir) // Swipe the card!
+    }
+  }
+
+  return (
+    <div className='tinder_cards'>
+      <div className='cardContainer'>
+        {characters.map((character, index) =>
+          <TinderCard ref={childRefs[index]} className='swipe' key={character.name} onSwipe={(dir) => swiped(dir, character.name)} onCardLeftScreen={() => outOfFrame(character.name)}>
+            <div style={{ backgroundImage: 'url(' + character.url + ')' }} className='card'>
+              <h3>{character.name}</h3>
+            </div>
           </TinderCard>
-          <TinderCard 
-        onSwipe={onSwipe} 
-        onCardLeftScreen={() => onCardLeftScreen('fooBar')} 
-        preventSwipe={['right', 'left']}>
-          
-          {props.users.length > 0 ? <img className='card_image' src={props.users[1].imageUrl} alt=''/>: null}
-          </TinderCard>
-          <TinderCard 
-        onSwipe={onSwipe} 
-        onCardLeftScreen={() => onCardLeftScreen('fooBar')} 
-        preventSwipe={['right', 'left']}>
-          
-          {props.users.length > 0 ? <img className='card_image' src={props.users[0].imageUrl} alt=''/>: null}
-          </TinderCard>
-       
-        </div>
-    )
+        )}
+      </div>
+      {/* <div className='buttons'>
+        <button onClick={() => swipe('left')}>Swipe left!</button>
+        <button onClick={() => swipe('right')}>Swipe right!</button>
+      </div>
+      {lastDirection ? <h2 key={lastDirection} className='infoText'>You swiped {lastDirection}</h2> : <h2 className='infoText'>Swipe a card or press a button to get started!</h2>} */}
+    </div>
+  )
 }
 
 const mapStateToProps = (state) =>{
@@ -60,7 +76,8 @@ const mapStateToProps = (state) =>{
 }
 const toActions = dispatch =>{
   return{
-    loadUsers:(users) => dispatch(actions.loadUsers(users))
+    loadUsers:(users) => dispatch(actions.loadUsers(users)),
+    onSwipe: (direction, id) => dispatch(actions.onSwipe(direction, id))
   }
 }
 export default connect(mapStateToProps,toActions)(Card);
