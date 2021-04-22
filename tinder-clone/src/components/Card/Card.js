@@ -6,6 +6,7 @@ import daniPhoto from '../../assets/Dani.jpg';
 import radiPhoto from '../../assets/Radi.jpg';
 import {connect} from 'react-redux';
 import * as actions from '../../actions/actions';
+import axios from 'axios';
 const db = [ 
   {
   name: 'Kristiyan Asparuhov',
@@ -24,7 +25,6 @@ let charactersState = db
 function Card(props) {
   const [characters, setCharacters] = useState(db)
   const [lastDirection, setLastDirection] = useState()
-
   const childRefs = useMemo(() => Array(db.length).fill(0).map(i => React.createRef()), [])
 
   const swiped = (direction, nameToDelete) => {
@@ -52,11 +52,9 @@ function Card(props) {
   return (
     <div className='tinder_cards'>
       <div className='cardContainer'>
-        {characters.map((character, index) =>
+        {characters.map((character,      index) =>
           <TinderCard ref={childRefs[index]} className='swipe' key={character.name} onSwipe={(dir) => swiped(dir, character.name)} onCardLeftScreen={() => outOfFrame(character.name)}>
-            <div style={{ backgroundImage: 'url(' + character.url + ')' }} className='card'>
-              <h3>{character.name}</h3>
-            </div>
+            <div style={{ backgroundImage: 'url(' + character.url + ')' }} className='card'/>
           </TinderCard>
         )}
       </div>

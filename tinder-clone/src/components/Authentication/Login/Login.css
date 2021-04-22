@@ -1,0 +1,88 @@
+*:focus {
+  outline: none !important;
+}
+.Login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid rgb(224, 127, 0);
+  width: 350px;
+  height: 500px;
+  margin: 0 auto;
+  margin-top: 100px;
+  background-color: #ffffff;
+}
+
+.Login input[type="email"],
+input[type="password"],
+textarea {
+  font-size: 25px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  border-bottom: 2px solid orange;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  background-color: transparent;
+}
+
+.Login h1 {
+  color: rgb(255, 123, 0);
+}
+
+.Login button {
+  display: block;
+  width: 200px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  font-family: sans-serif;
+  text-decoration: none;
+  color: orange;
+  font-weight: bolder;
+  border: 2px solid #333;
+  letter-spacing: 2px;
+  text-align: center;
+  position: relative;
+  transition: all 0.35s;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border: 1px solid;
+  box-shadow: inset 0 0 20px rgba(248, 142, 2, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.2);
+  outline-color: rgba(255, 255, 255, 0);
+  outline-offset: 15px;
+  text-shadow: 1px 1px 2px #427388;
+  background-color: rgb(212, 103, 0);
+  color: white;
+}
+
+.Login button:hover {
+  border: 1px solid;
+  box-shadow: inset 0 0 20px 0 0 20px rgba(255, 255, 255, 0.2);
+  outline-color: rgba(255, 255, 255, 0);
+  outline-offset: 15px;
+  text-shadow: 1px 1px 2px #427388;
+  background-color: rgb(196, 152, 58);
+  color: white;
+  width: 220px;
+  font-size: 22px;
+}
+
+.Login .link {
+  cursor: pointer;
+  color: blue;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
+  font-size: 25px;
+}
