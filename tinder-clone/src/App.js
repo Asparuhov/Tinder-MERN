@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import { BrowserRouter, Link, Route, Redirect } from "react-router-dom";
-import Footer from "./components/Footer/Footer";
-import Header from "./components/Header/Header";
-import Card from "./components/Card/Card";
+
 import Register from "./components/Authentication/Register/Register";
 import Login from "./components/Authentication/Login/Login";
 import * as actions from "./actions/actions";
 import axios from "axios";
 import { connect } from "react-redux";
+import Profile from "./components/Profile/Profile";
+import Header from "./components/Header/Header";
 function App(props) {
   useEffect(() => {
     axios
@@ -21,22 +21,15 @@ function App(props) {
   return (
     <div className="App">
       <BrowserRouter>
-        <Route exact="/">
-          {props.loggedIn ? (
-            <div className="main_layout">
-              <Header />
-              <Card />
-              <Footer />
-            </div>
-          ) : (
-            <Redirect to="/login" />
-          )}{" "}
+        <Route exact path="/">
+          {props.loggedIn ? <Header /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/login" exact>
           {props.loggedIn === false ? <Login /> : <Redirect to="/" />}
         </Route>
         <Route path="/register" exact component={Register} />
+        <Route path="/profile" exact component={Profile} />
       </BrowserRouter>
     </div>
   );
