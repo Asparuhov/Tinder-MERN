@@ -6,6 +6,7 @@ import axios from "axios";
 import * as actions from "../../actions/actions";
 function Verification(props) {
   const [image, setImage] = useState(null);
+  const [allowed, setAllowed] = useState(false);
   const loadImage = (file) => {
     var reader = new FileReader();
     var url = reader.readAsDataURL(file);
@@ -15,20 +16,23 @@ function Verification(props) {
     }.bind(this);
     console.log(url);
   };
+
   const verify = (id) => {
-    console.log(id);
-    axios
-      .post("verify", { id })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-    axios
-      .post("resetUser", { id })
-      .then((res) => {
-        props.setCurrentUser(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
+    if (image) {
+      axios
+        .post("verify", { id })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+      axios
+        .post("resetUser", { id })
+        .then((res) => {
+          props.setCurrentUser(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
   };
+
   return (
     <div className="verification_page">
       <h1
@@ -77,7 +81,6 @@ function Verification(props) {
         onChange={(e) => loadImage(e.target.files[0])}
       />
       <label for="file">Select file</label>
-
       <button id="verify_button" onClick={() => verify(props.user._id)}>
         Verify!
       </button>
