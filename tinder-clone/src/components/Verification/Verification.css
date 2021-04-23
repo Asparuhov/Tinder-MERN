@@ -1,0 +1,96 @@
+.verify_image {
+  width: 300px;
+  height: 500px;
+  border-radius: 25px;
+
+  object-fit: cover;
+  object-position: center;
+  background-position: center;
+  margin-bottom: 25px;
+  border: 5px solid orange;
+}
+
+.verification_page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-file-input {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
+  margin-bottom: 25px;
+}
+
+.verification_page label {
+  display: block;
+  position: relative;
+  width: 200px;
+  height: 50px;
+  border-radius: 25px;
+  background: rgb(217, 129, 65);
+  background: linear-gradient(
+    90deg,
+    rgba(217, 129, 65, 1) 0%,
+    rgba(254, 255, 158, 1) 52%,
+    rgba(241, 233, 68, 1) 100%
+  );
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease-out;
+  margin-top: 20px;
+}
+input:hover + label,
+input:focus + label {
+  transform: scale(1.02);
+}
+#verify_button {
+  font-size: 25px;
+  width: 170px;
+  height: 50px;
+  margin: 10px;
+  top: 25px;
+  display: block;
+  width: 200px;
+  height: 40px;
+  line-height: 40px;
+  font-family: sans-serif;
+  text-decoration: none;
+  color: orange;
+  font-weight: bolder;
+  letter-spacing: 2px;
+  text-align: center;
+  position: relative;
+  transition: all 0.35s;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border: 1px solid;
+  box-shadow: inset 0 0 20px rgba(248, 142, 2, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.2);
+  outline-color: rgba(255, 255, 255, 0);
+  outline-offset: 15px;
+  text-shadow: 1px 1px 2px #427388;
+  background-color: rgb(212, 103, 0);
+  color: white;
+  border-radius: 20px;
+}
+#verify_button:hover {
+  border: 1px solid;
+  box-shadow: inset 0 0 20px 0 0 20px rgba(255, 255, 255, 0.2);
+  outline-color: rgba(255, 255, 255, 0);
+  outline-offset: 15px;
+  text-shadow: 1px 1px 2px #427388;
+  background-color: rgb(196, 152, 58);
+  color: white;
+  width: 220px;
+  font-size: 25px;
+  cursor: pointer;
+}

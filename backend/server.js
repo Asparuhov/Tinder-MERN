@@ -5,6 +5,7 @@ const User = require("./userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const path = require("path");
+const { resolveSoa } = require("dns");
 const app = express();
 
 app.use(express.json());
@@ -12,6 +13,29 @@ app.use(cors());
 
 app.get("/user", authenticateToken, (req, res, next) => {
   res.send(req.user);
+});
+
+app.post("/resetUser", (req, res, next) => {
+  let id = req.body.id;
+  console.log(id);
+  User.findById(id, (err, user) => {
+    if (user) {
+      res.send(user);
+    } else {
+      res.send(err);
+    }
+  });
+});
+
+app.post("/verify", (req, res) => {
+  let id = req.body.id;
+  User.findByIdAndUpdate(id, { verified: true }, (err, docs) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Updated User : ", docs);
+    }
+  });
 });
 
 app.post("/register", async (req, res) => {
@@ -81,6 +105,7 @@ mongoose
     {
       useUnifiedTopology: true,
       useNewUrlParser: true,
+      useFindAndModify: false,
     }
   )
   .then((res) => {

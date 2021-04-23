@@ -9,24 +9,45 @@ import axios from "axios";
 import { connect } from "react-redux";
 import Profile from "./components/Profile/Profile";
 import Header from "./components/Header/Header";
+import Verification from "./components/Verification/Verification";
 function App(props) {
   useEffect(() => {
     axios
       .get("user")
+
       .then((res) => {
         props.setCurrentUser(res.data);
+        console.log(res.data);
       })
       .catch((err) => console.log(err));
+    console.log(props.loggedIn);
   }, []);
   return (
     <div className="App">
       <BrowserRouter>
         <Route exact path="/">
-          {props.loggedIn ? <Header /> : <Redirect to="/login" />}
+          {props.loggedIn && props.currentUser.verified ? <Header /> : null}
+          {props.loggedIn && !props.currentUser.verified ? (
+            <Redirect to="/verification" />
+          ) : null}
+          {props.loggedIn === false ? <Redirect to="/login" /> : null}
+        </Route>
+        <Route exact path="/verification">
+          {props.loggedIn && !props.currentUser.verified ? (
+            <Verification />
+          ) : null}
+          {props.loggedIn && props.currentUser.verified ? (
+            <Redirect to="/" />
+          ) : null}
+          {!props.loggedIn ? <Redirect to="/login" /> : null}
         </Route>
 
         <Route path="/login" exact>
-          {props.loggedIn === false ? <Login /> : <Redirect to="/" />}
+          {props.loggedIn && props.currentUser.verified ? <Header /> : null}
+          {props.loggedIn && !props.currentUser.verified ? (
+            <Redirect to="/verification" />
+          ) : null}
+          {!props.loggedIn  ? <Login /> : null}
         </Route>
         <Route path="/register" exact component={Register} />
         <Route path="/profile" exact component={Profile} />
