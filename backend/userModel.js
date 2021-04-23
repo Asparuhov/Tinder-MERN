@@ -15,9 +15,9 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  img: {
-    data: Buffer,
-    contentType: String,
+  verified: {
+    type: Boolean,
+    required: true,
   },
 });
 

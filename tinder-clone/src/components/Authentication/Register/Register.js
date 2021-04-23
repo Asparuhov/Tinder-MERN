@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Register.css";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
@@ -102,7 +102,9 @@ const Register = (props) => {
         </p>
       ) : null}
       <button
-        onClick={() => validateEmail(user.email, user.password, user.username)}
+        onClick={() =>
+          validateEmail(user.email, user.password, user.username, user.image)
+        }
       >
         Register
       </button>

@@ -6,20 +6,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 const app = express();
-const multer = require('multer');
+
 app.use(express.json());
 app.use(cors());
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, 'uploads')
-  },
-  filename: (req, file, cb) => {
-      cb(null, file.fieldname + '-' + Date.now())
-  }
-});
-
-var upload = multer({ storage: storage });
 
 app.get("/user", authenticateToken, (req, res, next) => {
   res.send(req.user);
@@ -37,6 +26,7 @@ app.post("/register", async (req, res) => {
         username: username,
         email: email,
         password: hashedPass,
+        verified: false,
       });
       newUser
         .save()
@@ -80,6 +70,7 @@ function authenticateToken(req, res, next) {
       _id: user._id,
       username: user.username,
       email: user.email,
+      verified: user.verified,
     };
     next();
   });
